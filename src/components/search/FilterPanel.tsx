@@ -6,6 +6,7 @@ import { SlidersHorizontal, X } from 'lucide-react'
 
 const COUNTRIES = ['US', 'CA']
 const CURRENCIES = ['USD', 'CAD']
+const EXCHANGES = ['NYSE Arca', 'NASDAQ', 'Toronto', 'CBOE', 'NYSEArca']
 const ASSET_CLASSES = ['Stocks', 'Bonds', 'Gold', 'Commodities', 'Cash', 'Crypto', 'Mixed']
 const STRATEGIES = ['Passive Index', 'Active', 'Covered Call', 'Leveraged', 'Inverse', 'Dividend Growth', 'Income']
 const DIV_FREQS = ['Monthly', 'Quarterly', 'Semi-Annual', 'Annual', 'None']
@@ -29,7 +30,7 @@ export function FilterPanel() {
   const activeCount = ['country', 'currency', 'asset_class', 'strategy_type',
     'is_covered_call', 'is_leveraged', 'is_hedged', 'dividend_frequency',
     'growth_or_income', 'risk_score_min', 'risk_score_max', 'mer_max',
-    'yield_min'].filter(k => searchParams.has(k)).length
+    'yield_min', 'exchange', 'price_min', 'price_max'].filter(k => searchParams.has(k)).length
 
   return (
     <>
@@ -129,6 +130,38 @@ export function FilterPanel() {
                       }`}
                     >
                       {n}
+                    </button>
+                  )
+                })}
+              </div>
+            </FilterSection>
+
+            <FilterSection label="Exchange">
+              <ChipGroup
+                options={EXCHANGES}
+                selected={searchParams.get('exchange')}
+                onChange={(v) => applyFilter('exchange', v)}
+              />
+            </FilterSection>
+
+            <FilterSection label="Price Range">
+              <div className="flex gap-2 flex-wrap">
+                {[['Under $25', '0', '25'], ['$25–$100', '25', '100'], ['$100–$500', '100', '500'], ['Over $500', '500', '']].map(([label, min, max]) => {
+                  const isActive = searchParams.get('price_min') === min && searchParams.get('price_max') === (max || '')
+                  return (
+                    <button
+                      key={label}
+                      onClick={() => {
+                        applyFilter('price_min', min || null)
+                        applyFilter('price_max', max || null)
+                      }}
+                      className={`rounded-lg border px-3 py-1.5 text-xs font-medium transition ${
+                        isActive
+                          ? 'border-[--color-brand] bg-[--color-brand-muted] text-[--color-brand]'
+                          : 'border-gray-200 text-gray-600'
+                      }`}
+                    >
+                      {label}
                     </button>
                   )
                 })}

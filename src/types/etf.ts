@@ -19,6 +19,8 @@ export interface ETFSummary {
   growth_or_income: 'Growth' | 'Income' | 'Balanced' | null
   mer: number | null
   aum_cad: number | null
+  price: number | null
+  exchange: string | null
   risk_score: number | null
 }
 
@@ -83,6 +85,9 @@ export interface SearchFilters {
   mer_max?: number
   yield_min?: number
   aum_min_cad?: number
-  sort?: 'aum_cad' | 'mer' | 'distribution_yield' | 'risk_score' | 'name'
+  exchange?: string
+  price_min?: number
+  price_max?: number
+  sort?: 'aum_cad' | 'mer' | 'distribution_yield' | 'risk_score' | 'name' | 'price'
   order?: 'asc' | 'desc'
 }

@@ -26,6 +26,11 @@ function SearchResults() {
     is_hedged: params.get('is_hedged') === 'true' ? true : undefined,
     mer_max: params.get('mer_max') ? Number(params.get('mer_max')) : undefined,
     yield_min: params.get('yield_min') ? Number(params.get('yield_min')) : undefined,
+    exchange: params.get('exchange') ?? undefined,
+    price_min: params.get('price_min') ? Number(params.get('price_min')) : undefined,
+    price_max: params.get('price_max') ? Number(params.get('price_max')) : undefined,
+    risk_score_min: params.get('risk_score_min') ? Number(params.get('risk_score_min')) : undefined,
+    risk_score_max: params.get('risk_score_max') ? Number(params.get('risk_score_max')) : undefined,
   }
 
   const { data, isLoading } = useSearch(params.get('q') ?? '', filters)
@@ -122,6 +127,32 @@ function SearchResults() {
                   onClick={() => {
                     const p = new URLSearchParams(params.toString())
                     params.get('country') === v ? p.delete('country') : p.set('country', v)
+                    router.push(`/search?${p.toString()}`)
+                  }}
+                />
+              ))}
+            </FilterGroup>
+
+            <FilterGroup label="Exchange">
+              {['NYSE Arca', 'NASDAQ', 'Toronto'].map(v => (
+                <FilterChip key={v} label={v} active={params.get('exchange') === v}
+                  onClick={() => {
+                    const p = new URLSearchParams(params.toString())
+                    params.get('exchange') === v ? p.delete('exchange') : p.set('exchange', v)
+                    router.push(`/search?${p.toString()}`)
+                  }}
+                />
+              ))}
+            </FilterGroup>
+
+            <FilterGroup label="Price Range">
+              {[['Under $25', '0', '25'], ['$25–$100', '25', '100'], ['$100–$500', '100', '500'], ['Over $500', '500', '']].map(([label, min, max]) => (
+                <FilterChip key={label} label={label}
+                  active={params.get('price_min') === min && params.get('price_max') === (max || '')}
+                  onClick={() => {
+                    const p = new URLSearchParams(params.toString())
+                    min ? p.set('price_min', min) : p.delete('price_min')
+                    max ? p.set('price_max', max) : p.delete('price_max')
                     router.push(`/search?${p.toString()}`)
                   }}
                 />

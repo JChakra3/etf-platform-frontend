@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import type { ETFSummary } from '@/types/etf'
-import { formatPercent, riskLabel } from '@/lib/formatters'
+import { formatPercent, riskLabel, formatPrice } from '@/lib/formatters'
 
 interface Props {
   etf: ETFSummary
@@ -18,11 +18,11 @@ export function ETFCard({ etf }: Props) {
       </div>
       <div className="flex flex-col items-end gap-1.5 shrink-0">
         <span className="text-[15px] font-bold text-slate-900 dark:text-white">
-          {formatPercent(etf.distribution_yield)}{' '}
-          <span className="text-[10px] text-slate-400 dark:text-slate-500 font-medium ml-0.5">YLD</span>
+          {formatPrice(etf.price, etf.currency)}
         </span>
-        <span className="text-[10px] font-bold tracking-wider uppercase px-2.5 py-1 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 text-slate-600 dark:text-slate-300">
-          {riskLabel(etf.risk_score)}
+        <span className="text-[12px] text-slate-500 dark:text-slate-400 font-medium">
+          {formatPercent(etf.distribution_yield)}{' '}
+          <span className="text-[10px] text-slate-400 dark:text-slate-500">YLD</span>
         </span>
       </div>
     </Link>

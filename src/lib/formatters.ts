@@ -24,6 +24,12 @@ export function formatDate(isoDate: string | null | undefined): string {
   return new Date(isoDate).toLocaleDateString('en-CA', { year: 'numeric', month: 'short', day: 'numeric' })
 }
 
+export function formatPrice(value: number | null | undefined, currency = 'USD'): string {
+  if (value == null) return '—'
+  const symbol = currency === 'CAD' ? 'CA$' : '$'
+  return `${symbol}${value.toFixed(2)}`
+}
+
 export function riskLabel(score: number | null): string {
   if (score == null) return 'Unknown'
   return ({ 1: 'Low Risk', 2: 'Low-Med', 3: 'Medium', 4: 'Med-High', 5: 'High Risk' })[score] ?? 'Unknown'
