@@ -149,10 +149,10 @@ export function FilterSheet({ currentFilters = {}, onApply, activeCount = 0 }: P
       </button>
 
       {open && (
-        <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/40" onClick={() => setOpen(false)}>
+        <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/40 animate-fade-in" onClick={() => setOpen(false)}>
           <div className="w-full max-w-[393px]">
             <div
-              className="w-full max-h-[88vh] overflow-y-auto rounded-t-[32px] bg-white dark:bg-slate-900 px-5 pb-6 pt-5"
+              className="w-full max-h-[88vh] overflow-y-auto no-scrollbar rounded-t-[32px] bg-white dark:bg-slate-900 px-5 pb-6 pt-5 animate-slide-up"
               onClick={e => e.stopPropagation()}
             >
               <div className="flex items-center justify-between mb-6">

@@ -120,12 +120,12 @@ export default function HomePage() {
         <div className="fixed inset-0 z-[100]">
           {/* Full-screen dim — no blur */}
           <div
-            className="absolute inset-0 bg-slate-900/50"
+            className="absolute inset-0 bg-slate-900/50 animate-fade-in"
             onClick={() => setIsMenuOpen(false)}
           />
           {/* Constrain panel to the app shell */}
           <div className="absolute inset-y-0 left-1/2 -translate-x-1/2 w-full max-w-[393px] flex justify-end pointer-events-none">
-          <div className="relative pointer-events-auto w-[75%] bg-white dark:bg-slate-900 h-full shadow-[-20px_0_40px_rgba(0,0,0,0.15)] dark:shadow-[-20px_0_40px_rgba(0,0,0,0.4)] flex flex-col animate-in slide-in-from-right duration-300">
+          <div className="relative pointer-events-auto w-[75%] bg-white dark:bg-slate-900 h-full shadow-[-20px_0_40px_rgba(0,0,0,0.15)] dark:shadow-[-20px_0_40px_rgba(0,0,0,0.4)] flex flex-col animate-slide-in-right">
             <div className="flex items-center justify-between p-6 border-b border-slate-100 dark:border-slate-800">
               <h2 className="text-xl font-bold text-slate-900 dark:text-white">Menu</h2>
               <button
