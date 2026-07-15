@@ -1,12 +1,18 @@
+'use client'
+
 import Link from 'next/link'
 import type { ETFSummary } from '@/types/etf'
-import { formatPercent, riskLabel, formatPrice } from '@/lib/formatters'
+import { formatPercent, formatPrice } from '@/lib/formatters'
+import { useCurrency } from '@/hooks/useCurrency'
 
 interface Props {
   etf: ETFSummary
 }
 
 export function ETFCard({ etf }: Props) {
+  const { currency, convertPrice } = useCurrency()
+  const convertedPrice = convertPrice(etf.price, etf.currency ?? 'USD')
+
   return (
     <Link
       href={`/etf/${etf.ticker}`}
@@ -18,7 +24,7 @@ export function ETFCard({ etf }: Props) {
       </div>
       <div className="flex flex-col items-end gap-1.5 shrink-0">
         <span className="text-[15px] font-bold text-slate-900 dark:text-white">
-          {formatPrice(etf.price, etf.currency)}
+          {formatPrice(convertedPrice, currency)}
         </span>
         <span className="text-[12px] text-slate-500 dark:text-slate-400 font-medium">
           {formatPercent(etf.distribution_yield)}{' '}

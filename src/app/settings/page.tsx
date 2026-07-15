@@ -37,6 +37,7 @@ export default function SettingsPage() {
   function handleCurrency(c: 'CAD' | 'USD') {
     setCurrency(c)
     localStorage.setItem('pref_currency', c)
+    window.dispatchEvent(new StorageEvent('storage', { key: 'pref_currency', newValue: c }))
   }
 
   return (
