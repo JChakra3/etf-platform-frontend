@@ -8,14 +8,14 @@ import { ETFCard } from '@/components/etf/ETFCard'
 import { SkeletonCard } from '@/components/shared/SkeletonCard'
 
 const QUICK_CHIPS = [
-  { label: 'All',          filters: {} },
-  { label: 'Equities',     filters: { asset_class: 'Stocks' } },
-  { label: 'Fixed Income', filters: { asset_class: 'Bonds' } },
-  { label: 'High Yield',   filters: { yield_min: '0.04' } },
-  { label: 'Covered Call', filters: { is_covered_call: 'true' } },
-  { label: 'Leveraged',    filters: { is_leveraged: 'true' } },
-  { label: 'Hedged',       filters: { is_hedged: 'true' } },
-  { label: 'Cash',         filters: { asset_class: 'Cash' } },
+  { label: 'All',        filters: {} },
+  { label: 'High Yield', filters: { yield_min: '0.04' } },
+  { label: 'Low Yield',  filters: { growth_or_income: 'Growth' } },
+  { label: 'NYSE',       filters: { exchange: 'NYSE Arca' } },
+  { label: 'NASDAQ',     filters: { exchange: 'NASDAQ' } },
+  { label: 'TSX',        filters: { exchange: 'Toronto' } },
+  { label: 'Sector',     filters: { strategy_type: 'Sector' } },
+  { label: 'Bonds',      filters: { asset_class: 'Bonds' } },
 ]
 
 const EXCHANGES = ['NYSE Arca', 'NASDAQ', 'Toronto', 'CBOE']
@@ -277,10 +277,10 @@ function SearchResults() {
 
       {/* Filter bottom sheet */}
       {showFilters && (
-        <div className="fixed inset-0 z-50 flex flex-col justify-end bg-black/40" onClick={() => setShowFilters(false)}>
+        <div className="fixed inset-0 z-[60] flex flex-col justify-end bg-black/40" onClick={() => setShowFilters(false)}>
           <div className="absolute inset-x-0 bottom-0 flex justify-center pointer-events-none" style={{left: '50%', transform: 'translateX(-50%)', width: '100%', maxWidth: '393px'}}>
           <div
-            className="w-full max-h-[88vh] overflow-y-auto no-scrollbar rounded-t-[32px] bg-white dark:bg-slate-900 px-5 pb-6 pt-5 border-t border-slate-100 dark:border-slate-800 pointer-events-auto animate-slide-up"
+            className="w-full max-h-[88vh] overflow-y-auto no-scrollbar rounded-t-[32px] bg-white dark:bg-slate-900 px-5 pb-28 pt-5 border-t border-slate-100 dark:border-slate-800 pointer-events-auto animate-slide-up"
             onClick={e => e.stopPropagation()}
           >
             {/* Header */}

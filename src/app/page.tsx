@@ -10,14 +10,16 @@ import { SkeletonCard } from '@/components/shared/SkeletonCard'
 import { FilterSheet } from '@/components/search/FilterSheet'
 import type { SearchFilters } from '@/types/etf'
 
-const FILTER_CHIPS = ['All', 'Equities', 'Fixed Income', 'High Yield', 'Cash', 'Covered Call']
+const FILTER_CHIPS = ['All', 'High Yield', 'Low Yield', 'NYSE', 'NASDAQ', 'TSX', 'Sector', 'Bonds']
 
 const CHIP_FILTER_MAP: Record<string, Record<string, string>> = {
-  'Equities':     { asset_class: 'Stocks' },
-  'Fixed Income': { asset_class: 'Bonds' },
-  'High Yield':   { yield_min: '0.04', growth_or_income: 'Income' },
-  'Cash':         { asset_class: 'Cash' },
-  'Covered Call': { is_covered_call: 'true' },
+  'High Yield':   { yield_min: '0.04' },
+  'Low Yield':    { yield_min: '0', growth_or_income: 'Growth' },
+  'NYSE':         { exchange: 'NYSE Arca' },
+  'NASDAQ':       { exchange: 'NASDAQ' },
+  'TSX':          { exchange: 'Toronto' },
+  'Sector':       { strategy_type: 'Sector' },
+  'Bonds':        { asset_class: 'Bonds' },
 }
 
 export default function HomePage() {
