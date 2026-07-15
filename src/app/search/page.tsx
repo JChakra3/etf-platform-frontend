@@ -278,8 +278,9 @@ function SearchResults() {
       {/* Filter bottom sheet */}
       {showFilters && (
         <div className="fixed inset-0 z-50 flex flex-col justify-end bg-black/40" onClick={() => setShowFilters(false)}>
+          <div className="absolute inset-x-0 bottom-0 flex justify-center pointer-events-none" style={{left: '50%', transform: 'translateX(-50%)', width: '100%', maxWidth: '393px'}}>
           <div
-            className="max-h-[88vh] overflow-y-auto rounded-t-[32px] bg-white dark:bg-slate-900 px-5 pb-6 pt-5 border-t border-slate-100 dark:border-slate-800"
+            className="w-full max-h-[88vh] overflow-y-auto rounded-t-[32px] bg-white dark:bg-slate-900 px-5 pb-6 pt-5 border-t border-slate-100 dark:border-slate-800 pointer-events-auto"
             onClick={e => e.stopPropagation()}
           >
             {/* Header */}
@@ -356,6 +357,7 @@ function SearchResults() {
                 Apply Filters
               </button>
             </div>
+          </div>
           </div>
         </div>
       )}

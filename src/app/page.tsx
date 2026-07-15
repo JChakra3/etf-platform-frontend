@@ -7,6 +7,8 @@ import { Search, Menu, X, Settings } from 'lucide-react'
 import { useSearch } from '@/hooks/useSearch'
 import { ETFCard } from '@/components/etf/ETFCard'
 import { SkeletonCard } from '@/components/shared/SkeletonCard'
+import { FilterSheet } from '@/components/search/FilterSheet'
+import type { SearchFilters } from '@/types/etf'
 
 const FILTER_CHIPS = ['All', 'Equities', 'Fixed Income', 'High Yield', 'Cash', 'Covered Call']
 
@@ -23,6 +25,7 @@ export default function HomePage() {
   const [query, setQuery] = useState('')
   const [activeFilter, setActiveFilter] = useState('All')
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [extraFilters, setExtraFilters] = useState<SearchFilters>({})
   const [, startTransition] = useTransition()
 
   const activeFilters = CHIP_FILTER_MAP[activeFilter] ?? {}
@@ -30,7 +33,10 @@ export default function HomePage() {
     ...(activeFilters.asset_class ? { asset_class: activeFilters.asset_class } : {}),
     ...(activeFilters.is_covered_call ? { is_covered_call: true } : {}),
     ...(activeFilters.growth_or_income ? { growth_or_income: activeFilters.growth_or_income as any } : {}),
+    ...extraFilters,
   })
+
+  const activeFilterCount = Object.keys(extraFilters).length
 
   function handleSearch(e: React.FormEvent) {
     e.preventDefault()
@@ -56,24 +62,31 @@ export default function HomePage() {
         </button>
       </header>
 
-      {/* Search Input */}
-      <form onSubmit={handleSearch} className="mb-6">
-        <div className="relative shadow-[0_4px_20px_rgba(0,0,0,0.03)] dark:shadow-[0_4px_20px_rgba(0,0,0,0.2)] rounded-2xl">
-          <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
-            <Search className="h-5 w-5 text-slate-400 dark:text-slate-500" strokeWidth={2.5} />
+      {/* Search Input + Filter button */}
+      <div className="flex items-center gap-3 mb-6">
+        <form onSubmit={handleSearch} className="flex-1">
+          <div className="relative shadow-[0_4px_20px_rgba(0,0,0,0.03)] dark:shadow-[0_4px_20px_rgba(0,0,0,0.2)] rounded-2xl">
+            <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
+              <Search className="h-5 w-5 text-slate-400 dark:text-slate-500" strokeWidth={2.5} />
+            </div>
+            <input
+              type="search"
+              value={query}
+              onChange={e => setQuery(e.target.value)}
+              placeholder="Search by ticker, provider..."
+              autoComplete="off"
+              autoCorrect="off"
+              spellCheck={false}
+              className="w-full bg-white dark:bg-slate-900 text-slate-900 dark:text-white rounded-2xl py-4 pl-12 pr-4 text-[15px] font-medium placeholder:text-slate-400 dark:placeholder:text-slate-500 border border-slate-100 dark:border-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm"
+            />
           </div>
-          <input
-            type="search"
-            value={query}
-            onChange={e => setQuery(e.target.value)}
-            placeholder="Search by ticker, provider, or asset class..."
-            autoComplete="off"
-            autoCorrect="off"
-            spellCheck={false}
-            className="w-full bg-white dark:bg-slate-900 text-slate-900 dark:text-white rounded-2xl py-4 pl-12 pr-4 text-[15px] font-medium placeholder:text-slate-400 dark:placeholder:text-slate-500 border border-slate-100 dark:border-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm"
-          />
-        </div>
-      </form>
+        </form>
+        <FilterSheet
+          currentFilters={extraFilters}
+          onApply={setExtraFilters}
+          activeCount={activeFilterCount}
+        />
+      </div>
 
       {/* Filter Chips */}
       <div className="flex overflow-x-auto no-scrollbar gap-2.5 mb-6 -mx-5 px-5 pb-2">
