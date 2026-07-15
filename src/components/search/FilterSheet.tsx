@@ -6,7 +6,7 @@ import type { SearchFilters } from '@/types/etf'
 
 const EXCHANGES    = ['NYSE Arca', 'NASDAQ', 'Toronto', 'CBOE']
 const COUNTRIES    = ['US', 'CA']
-const ASSET_CLASSES = ['Stocks', 'Bonds', 'Gold', 'Commodities', 'Cash', 'Mixed']
+const ASSET_CLASSES = ['Stocks', 'Bonds', 'Gold', 'Commodities', 'Mixed']
 
 function RangeSlider({ label, min, max, step, value, onChange, format }: {
   label: string; min: number; max: number; step: number
@@ -113,6 +113,12 @@ export function FilterSheet({ currentFilters = {}, onApply, activeCount = 0 }: P
     setCountry(currentFilters.country ?? null)
     setAssetClass(currentFilters.asset_class ?? null)
     setOpen(true)
+    document.body.classList.add('filter-open')
+  }
+
+  function handleClose() {
+    setOpen(false)
+    document.body.classList.remove('filter-open')
   }
 
   function handleApply() {
@@ -125,7 +131,7 @@ export function FilterSheet({ currentFilters = {}, onApply, activeCount = 0 }: P
     if (merMax < 3)       f.mer_max     = merMax / 100
     if (yieldMin > 0)     f.yield_min   = yieldMin / 100
     onApply(f)
-    setOpen(false)
+    handleClose()
   }
 
   function handleClear() {
@@ -149,15 +155,15 @@ export function FilterSheet({ currentFilters = {}, onApply, activeCount = 0 }: P
       </button>
 
       {open && (
-        <div className="fixed inset-0 z-[60] flex items-end justify-center bg-black/40 animate-fade-in" onClick={() => setOpen(false)}>
+        <div className="fixed inset-0 z-[60] flex items-end justify-center bg-black/40 animate-fade-in" onClick={handleClose}>
           <div className="w-full max-w-[393px]">
             <div
-              className="w-full max-h-[88vh] overflow-y-auto no-scrollbar rounded-t-[32px] bg-white dark:bg-slate-900 px-5 pb-28 pt-5 animate-slide-up"
+              className="w-full max-h-[88vh] overflow-y-auto no-scrollbar rounded-t-[32px] bg-white dark:bg-slate-900 px-5 pb-10 pt-5 animate-slide-up"
               onClick={e => e.stopPropagation()}
             >
               <div className="flex items-center justify-between mb-6">
                 <h2 className="text-[17px] font-bold text-slate-900 dark:text-white">Filters</h2>
-                <button onClick={() => setOpen(false)} className="p-1.5 text-slate-400 dark:text-slate-500">
+                <button onClick={handleClose} className="p-1.5 text-slate-400 dark:text-slate-500">
                   <X className="w-5 h-5" />
                 </button>
               </div>
