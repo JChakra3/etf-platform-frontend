@@ -51,6 +51,7 @@ export interface ETFDetail extends ETFSummary {
   withholding_tax_note: string | null
   roc_note: string | null
   ai_summary: string | null
+  ai_overview: string | null
   risk_asset_class: number | null
   risk_concentration: number | null
   risk_leverage: number | null
