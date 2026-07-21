@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { ArrowLeft, HelpCircle, Sparkles } from 'lucide-react'
-import { getETF } from '@/lib/api'
+import { getETF, getETFOverview } from '@/lib/api'
 import { ETFHoldings } from '@/components/etf/ETFHoldings'
 import { ETFTaxNotes } from '@/components/etf/ETFTaxNotes'
 import { formatPercent, formatMER, formatAUM } from '@/lib/formatters'
@@ -32,6 +32,14 @@ export default async function ETFPage({ params }: Props) {
     notFound()
   }
 
+  // Fetch AI overview (generated+cached on first request)
+  let aiOverview: string | null = null
+  try {
+    aiOverview = etf.ai_overview ?? await getETFOverview(ticker)
+  } catch {
+    // non-fatal
+  }
+
   return (
     <div className="flex flex-col min-h-full bg-slate-50 dark:bg-slate-950 pt-10 pb-8 px-5 transition-colors duration-200">
       {/* Nav & Header */}
@@ -49,15 +57,15 @@ export default async function ETFPage({ params }: Props) {
         <p className="text-[15px] font-medium text-zinc-500 dark:text-zinc-400 leading-snug">{etf.name}</p>
       </div>
 
-      {/* AI Summary Card */}
-      {etf.ai_summary && (
+      {/* AI Overview Card */}
+      {(aiOverview || etf.ai_summary) && (
         <div className="bg-black dark:bg-slate-900 text-white rounded-3xl p-5 mb-6 shadow-lg shadow-black/5 dark:border dark:border-slate-800">
           <div className="flex items-center gap-2 mb-3 text-emerald-300 dark:text-emerald-400">
             <Sparkles className="w-4 h-4" strokeWidth={2.5} />
-            <h3 className="text-[13px] font-bold tracking-wide uppercase">Plain English AI Summary</h3>
+            <h3 className="text-[13px] font-bold tracking-wide uppercase">AI Overview</h3>
           </div>
           <p className="text-[15px] font-medium leading-relaxed text-zinc-200 dark:text-zinc-300 opacity-90">
-            {etf.ai_summary}
+            {aiOverview ?? etf.ai_summary}
           </p>
         </div>
       )}

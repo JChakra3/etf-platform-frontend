@@ -52,6 +52,21 @@ export function getETF(ticker: string): Promise<ETFDetail> {
   return apiFetch<ETFDetail>(`/etfs/${ticker}`)
 }
 
+export interface ChatMessage { role: 'user' | 'assistant'; content: string }
+
+export async function sendChatMessage(messages: ChatMessage[]): Promise<string> {
+  const data = await apiFetch<{ reply: string }>('/ai/chat', {
+    method: 'POST',
+    body: JSON.stringify({ messages }),
+  })
+  return data.reply
+}
+
+export async function getETFOverview(ticker: string): Promise<string> {
+  const data = await apiFetch<{ overview: string }>(`/ai/overview/${ticker}`)
+  return data.overview
+}
+
 export function getETFMetrics(
   ticker: string,
   period: '1m' | '3m' | '6m' | '1y' | '3y' | '5y' = '1y',
