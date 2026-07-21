@@ -21,7 +21,7 @@ function MessageBubble({ msg }: { msg: ChatMessage }) {
         </div>
       )}
       <div
-        className={`max-w-[82%] px-4 py-3 rounded-[20px] text-[15px] leading-relaxed font-medium ${
+        className={`max-w-[82%] px-4 py-3 rounded-[20px] text-[15px] leading-relaxed font-medium whitespace-pre-wrap ${
           isUser
             ? 'bg-blue-600 text-white rounded-br-[6px]'
             : 'bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-100 border border-slate-100 dark:border-slate-800 rounded-bl-[6px] shadow-sm'
@@ -54,6 +54,7 @@ export default function AIGuidePage() {
   const [isLoading, setIsLoading] = useState(false)
   const bottomRef = useRef<HTMLDivElement>(null)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
+  const messagesRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -75,6 +76,7 @@ export default function AIGuidePage() {
     setInput('')
     if (textareaRef.current) {
       textareaRef.current.style.height = 'auto'
+      textareaRef.current.blur()
     }
     setIsLoading(true)
 
@@ -101,11 +103,12 @@ export default function AIGuidePage() {
   const isEmpty = messages.length === 0
 
   return (
-    <div className="flex flex-col h-full bg-slate-50 dark:bg-slate-950 transition-colors duration-200">
+    // Fixed-height container that fills the space inside the layout's main (which is h-[100dvh] minus nav)
+    <div className="flex flex-col" style={{ height: 'calc(100dvh - 6rem)' }}>
       {/* Header */}
-      <header className="shrink-0 pt-12 px-5 pb-4 flex items-center justify-between">
+      <header className="shrink-0 pt-10 px-5 pb-3 flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white mb-1">AI Guide</h1>
+          <h1 className="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white mb-0.5">AI Guide</h1>
           <p className="text-sm text-slate-500 dark:text-slate-400 font-medium">Ask anything about ETFs.</p>
         </div>
         {messages.length > 0 && (
@@ -119,10 +122,10 @@ export default function AIGuidePage() {
         )}
       </header>
 
-      {/* Messages area */}
-      <div className="flex-1 overflow-y-auto px-5 pt-2 pb-4">
+      {/* Messages — scrollable */}
+      <div ref={messagesRef} className="flex-1 overflow-y-auto px-5 py-2 no-scrollbar">
         {isEmpty ? (
-          <div className="flex flex-col items-center justify-center h-full gap-6 pb-16">
+          <div className="flex flex-col items-center justify-center h-full gap-5 pb-4">
             <div className="w-14 h-14 rounded-full bg-blue-600 flex items-center justify-center shadow-[0_8px_24px_rgba(37,99,235,0.3)]">
               <Sparkles className="w-7 h-7 text-white" strokeWidth={2.5} />
             </div>
@@ -153,8 +156,8 @@ export default function AIGuidePage() {
         )}
       </div>
 
-      {/* Input bar */}
-      <div className="shrink-0 px-5 pb-28 pt-3 bg-slate-50 dark:bg-slate-950">
+      {/* Input — pinned to bottom of this container */}
+      <div className="shrink-0 px-5 pb-4 pt-3 bg-slate-50 dark:bg-slate-950">
         <div className="relative flex items-end bg-white dark:bg-slate-900 shadow-[0_8px_30px_rgba(0,0,0,0.06)] dark:shadow-[0_8px_30px_rgba(0,0,0,0.3)] rounded-[28px] border border-slate-100 dark:border-slate-800 p-1.5 pl-4 transition-colors duration-200">
           <textarea
             ref={textareaRef}
