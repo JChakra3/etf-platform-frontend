@@ -108,7 +108,7 @@ export default function AIGuidePage() {
       {/* Header */}
       <header className="shrink-0 pt-10 px-5 pb-3 flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white mb-0.5">AI Guide</h1>
+          <h1 className="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white mb-0.5">ETF AI Assistant</h1>
           <p className="text-sm text-slate-500 dark:text-slate-400 font-medium">Ask anything about ETFs.</p>
         </div>
         {messages.length > 0 && (
@@ -129,12 +129,7 @@ export default function AIGuidePage() {
             <div className="w-14 h-14 rounded-full bg-blue-600 flex items-center justify-center shadow-[0_8px_24px_rgba(37,99,235,0.3)]">
               <Sparkles className="w-7 h-7 text-white" strokeWidth={2.5} />
             </div>
-            <div className="text-center">
-              <p className="text-[17px] font-bold text-slate-800 dark:text-slate-100 mb-1">ETF Research Assistant</p>
-              <p className="text-[13px] text-slate-500 dark:text-slate-400 font-medium max-w-[260px] leading-relaxed">
-                Ask me anything about ETFs — I'll use live data from the database to answer.
-              </p>
-            </div>
+            <p className="text-[17px] font-bold text-slate-800 dark:text-slate-100">How can I help?</p>
             <div className="flex flex-col gap-2.5 w-full max-w-[320px]">
               {STARTERS.map(s => (
                 <button

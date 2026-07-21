@@ -7,7 +7,7 @@ import { Home, Sparkles } from 'lucide-react'
 
 const NAV_ITEMS: { href: string; label: string; Icon: React.ComponentType<{ className?: string; strokeWidth?: number }> }[] = [
   { href: '/', label: 'Home', Icon: Home },
-  { href: '/ai', label: 'AI Guide', Icon: Sparkles },
+  { href: '/ai', label: 'AI Assistant', Icon: Sparkles },
 ]
 
 export function BottomNav() {
