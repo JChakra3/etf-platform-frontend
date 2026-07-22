@@ -64,7 +64,7 @@ export default async function ETFPage({ params }: Props) {
             <Sparkles className="w-4 h-4" strokeWidth={2.5} />
             <h3 className="text-[13px] font-bold tracking-wide uppercase">AI Overview</h3>
           </div>
-          <p className="text-[15px] font-medium leading-relaxed text-zinc-200 dark:text-zinc-300 opacity-90">
+          <p className="text-[15px] font-medium leading-relaxed text-zinc-200 dark:text-zinc-300 opacity-90 break-words overflow-visible">
             {aiOverview ?? etf.ai_summary}
           </p>
         </div>
