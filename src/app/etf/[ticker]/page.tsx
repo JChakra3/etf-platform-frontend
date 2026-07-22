@@ -59,12 +59,16 @@ export default async function ETFPage({ params }: Props) {
 
       {/* AI Overview Card */}
       {(aiOverview || etf.ai_summary) && (
-        <div className="bg-black dark:bg-slate-900 text-white rounded-3xl p-5 mb-6 shadow-lg shadow-black/5 dark:border dark:border-slate-800">
+        <div
+          className="bg-black dark:bg-slate-900 text-white rounded-3xl p-5 mb-6 shadow-lg shadow-black/5 dark:border dark:border-slate-800"
+          style={{ overflow: 'visible', height: 'auto' }}
+        >
           <div className="flex items-center gap-2 mb-3 text-emerald-300 dark:text-emerald-400">
             <Sparkles className="w-4 h-4" strokeWidth={2.5} />
             <h3 className="text-[13px] font-bold tracking-wide uppercase">AI Overview</h3>
           </div>
-          <p className="text-[15px] font-medium leading-relaxed text-zinc-200 dark:text-zinc-300 opacity-90 break-words overflow-visible">
+          <p style={{ whiteSpace: 'pre-wrap', wordBreak: 'break-word', overflow: 'visible' }}
+            className="text-[15px] font-medium leading-relaxed text-zinc-200 dark:text-zinc-300 opacity-90">
             {aiOverview ?? etf.ai_summary}
           </p>
         </div>
